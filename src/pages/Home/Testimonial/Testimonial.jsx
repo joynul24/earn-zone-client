@@ -11,22 +11,22 @@ import "swiper/css/navigation";
 
 // import required modules
 import { Navigation } from "swiper/modules";
-import { LuGift } from "react-icons/lu";
 import { Rating } from "@smastrom/react-rating";
 import "@smastrom/react-rating/style.css";
+import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
 
 const Testimonial = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_SERVER_URL}/reviews`)
+    fetch(`${import.meta.env. VITE_API_URL}/reviews`)
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);
-  console.log(reviews);
 
   return (
     <div className="my-10 md:my-20">
+      <SectionTitle title='What Our Users Are Saying' subTitle='Real feedback from real people who are earning daily by completing simple micro tasks — join them today!'></SectionTitle>
       <div className="px-2 mt-10 md:mt-15 md:px-20">
         <Swiper navigation={true} modules={[Navigation]} className="mySwiper">
           {reviews.map((review) => (

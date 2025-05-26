@@ -70,7 +70,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar font-i max-w-7xl mx-auto">
+      <div className="navbar font-i max-w-7xl mx-auto fixed top-0 left-0 right-0 z-50 bg-white">
         <div className="navbar-start">
           <div className="dropdown">
             <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -111,7 +111,7 @@ const Navbar = () => {
           <ul className=" text-black menu menu-horizontal px-1">{links}</ul>
         </div>
         <div className="navbar-end gap-2">
-          <Link to="https://github.com/joynul24/earn-zone">
+          <Link to="https://github.com/joynul24/earn-zone-client">
             <button className="btn border-0 btn-sm text-[10px]">
               Join as Developer
             </button>
