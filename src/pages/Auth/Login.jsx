@@ -3,6 +3,8 @@ import { FcGoogle } from "react-icons/fc";
 import { useContext } from "react";
 import AuthContext from "../../context/Authcontext";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Login = () => {
   const { loginUser, loginUserWithGoogle } = useContext(AuthContext);
@@ -14,22 +16,52 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const handleGoogleLogin = () => {
-    const result = loginUserWithGoogle();
-    if (result) {
-      navigate("/");
+  const handleGoogleLogin = async () => {
+    try {
+      const result = await loginUserWithGoogle();
+
+      if (result.user) {
+        // Save or update user to database
+        await axios.get(
+          `${import.meta.env.VITE_API_URL}/users/${result.user.email}`,
+          {
+            name: result.user.displayName,
+            image: result.user.photoURL,
+            email: result.user.email,
+            role: "worker",
+            coin: 10,
+          }
+        );
+
+        toast.success("User Google login successfully");
+        navigate("/");
+      }
+    } catch (error) {
+      console.error("Google login error:", error);
+      toast.error("Google login failed!");
     }
   };
 
   const onSubmit = async (data) => {
     try {
       const result = await loginUser(data.email, data.password);
+
       if (result.user) {
-        console.log(result.user);
+        await axios.post(
+          `${import.meta.env.VITE_API_URL}/users/${data.email}`,
+          {
+            email: data.email,
+            role: data.selection || "worker",
+          }
+        );
+
+        toast.success(
+          `Mr. ${result.user?.displayName || "User"} has successfully logged in`
+        );
         navigate("/");
       }
     } catch (error) {
-      console.log(error.message);
+      toast.error(`${error.message}`);
     }
   };
 
@@ -64,11 +96,32 @@ const Login = () => {
               <span className="label-text font-semibold">Password*</span>
             </label>
             <input
-             {...register("password", { required: true })}
+              {...register("password", {
+                required: true,
+                minLength: 6,
+                maxLength: 20,
+                pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+              })}
               type="password"
               placeholder="Your password"
               className="rounded-full focus:border-[#E43EF8] w-full input input-bordered"
             />
+            {errors.password?.type === "minLength" && (
+              <span className="text-red-400">
+                Password must be at least 6 characters
+              </span>
+            )}
+            {errors.password?.type === "maxLength" && (
+              <span className="text-red-400">
+                Password be less than 20 characters
+              </span>
+            )}
+            {errors.password?.type === "pattern" && (
+              <span className="text-red-400">
+                Password must have one uppercase one lower case, one number and
+                one special character.
+              </span>
+            )}
           </div>
           <div className="form-control mt-3">
             <input

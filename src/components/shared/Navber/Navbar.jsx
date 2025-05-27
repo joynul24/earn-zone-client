@@ -1,38 +1,33 @@
 // import { Link, NavLink } from "react-router-dom";
 // import "./Navber.css";
 import logo from "../../../assets/logos/earn-logo.png";
-// import { toast } from "react-toastify";
-import { useContext } from "react";
+import { toast } from "react-toastify";
+import { useContext, useEffect, useState } from "react";
 import AuthContext from "../../../context/Authcontext";
 import { Link, NavLink } from "react-router-dom";
-import { toast } from "react-toastify";
 import { FiLogOut } from "react-icons/fi";
-// import axios from "axios";
-
+import axios from "axios";
 
 const Navbar = () => {
-   const { signOutUser, user } = useContext(AuthContext)
-//   const [coins, setCoins] = useState(0);
+  const { signOutUser, user } = useContext(AuthContext);
+  const [coins, setCoins] = useState(0);
 
+  useEffect(() => {
+    const fetchCoins = async () => {
+      if (user?.email) {
+        try {
+          const res = await axios.get(
+            `${import.meta.env.VITE_API_URL}/users/${user.email}`
+          );
+          setCoins(res.data.coin);
+        } catch (error) {
+          toast.error(error.message);
+        }
+      }
+    };
 
-
-
-//   useEffect(() => {
-//     const fetchCoins = async () => {
-//       if (user?.email) {
-//         try {
-//           const res = await axios.get(
-//             `${import.meta.env.VITE_API_URL}/users/${user.email}`
-//           );
-//           setCoins(res.data.coin);
-//         } catch (error) {
-//           toast.error(error.message);
-//         }
-//       }
-//     };
-
-//     fetchCoins();
-//   }, [user]);
+    fetchCoins();
+  }, [user]);
 
   const handleSignOut = () => {
     signOutUser();
@@ -60,7 +55,7 @@ const Navbar = () => {
           <li>
             <button className="">
               Available Coin
-              <div className="badge badge-xs badge-secondary">0</div>
+              <div className="badge badge-xs badge-secondary">{coins || 0}</div>
             </button>
           </li>
         </>
