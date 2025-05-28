@@ -1,14 +1,16 @@
 import { Link, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import AuthContext from "../../context/Authcontext";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { ImSpinner9 } from "react-icons/im";
 
 const Login = () => {
   const { loginUser, loginUserWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false); // default: false
 
   const {
     register,
@@ -17,11 +19,11 @@ const Login = () => {
   } = useForm();
 
   const handleGoogleLogin = async () => {
+    setLoading(true);
     try {
       const result = await loginUserWithGoogle();
 
       if (result.user) {
-        // Save or update user to database
         await axios.get(
           `${import.meta.env.VITE_API_URL}/users/${result.user.email}`,
           {
@@ -39,10 +41,13 @@ const Login = () => {
     } catch (error) {
       console.error("Google login error:", error);
       toast.error("Google login failed!");
+    } finally {
+      setLoading(false);
     }
   };
 
   const onSubmit = async (data) => {
+    setLoading(true);
     try {
       const result = await loginUser(data.email, data.password);
 
@@ -56,23 +61,24 @@ const Login = () => {
         );
 
         toast.success(
-          `Mr. ${result.user?.displayName || "User"} has successfully logged in`
+          `Dear! ${result.user?.displayName || "User"} has successfully logged in`
         );
         navigate("/");
       }
     } catch (error) {
       toast.error(`${error.message}`);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="bg-gradient-to-bl from-[#E43EF8] to-[#6CCDDE] min-h-screen">
-      {/* Register form */}
       <div className="card-body shadow-2xl w-[90%] md:w-[60%] lg:w-[50%] mx-auto bg-white rounded-bl-4xl rounded-br-4xl">
-        <h1 className="text-xl font-o font-bold text-center  text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">
+        <h1 className="text-xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">
           Sign In
         </h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 font-i">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
           {/* Email */}
           <div className="form-control">
             <label className="label">
@@ -82,7 +88,7 @@ const Login = () => {
               {...register("email", { required: true })}
               type="email"
               placeholder="Your email"
-              className="rounded-full focus:border-[#E43EF8] w-full input input-bordered"
+              className="rounded-full w-full input input-bordered"
             />
             {errors.email && (
               <span className="text-red-400">
@@ -104,7 +110,7 @@ const Login = () => {
               })}
               type="password"
               placeholder="Your password"
-              className="rounded-full focus:border-[#E43EF8] w-full input input-bordered"
+              className="rounded-full w-full input input-bordered"
             />
             {errors.password?.type === "minLength" && (
               <span className="text-red-400">
@@ -113,39 +119,46 @@ const Login = () => {
             )}
             {errors.password?.type === "maxLength" && (
               <span className="text-red-400">
-                Password be less than 20 characters
+                Password must be less than 20 characters
               </span>
             )}
             {errors.password?.type === "pattern" && (
               <span className="text-red-400">
-                Password must have one uppercase one lower case, one number and
-                one special character.
+                Must include upper, lower, number & special character
               </span>
             )}
           </div>
+
+          {/* Submit Button */}
           <div className="form-control mt-3">
-            <input
-              className="rounded-full btn  w-full text-white border-none bg-gradient-to-bl from-[#2ad4f1] to-[#E43EF8] hover:bg-gradient-to-bl hover:from-[#E43EF8] hover:to-[#6CCDDE]"
+            <button
+              disabled={loading}
               type="submit"
-              value="Continue"
-            />
+              className="rounded-full btn w-full text-white border-none bg-gradient-to-bl from-[#2ad4f1] to-[#E43EF8] hover:from-[#E43EF8] hover:to-[#6CCDDE]"
+            >
+              {loading ? (
+                <ImSpinner9 className="animate-spin text-xl" />
+              ) : (
+                "Continue"
+              )}
+            </button>
           </div>
-          <p className="font-semibold text-center text-[#2ea6bb]">
-            Already have an account? please{" "}
+
+          <p className="text-center text-[#2ea6bb]">
+            Don't have an account?{" "}
             <Link className="text-[#E43EF8]" to="/register">
               Register
             </Link>
             .
           </p>
         </form>
-        <h2 className="text-center mt-5 md:text-xl font-bold">
-          Or Sign Up With
-        </h2>
+
+        <h2 className="text-center mt-5 font-bold">Or Sign In With</h2>
+
         <div className="flex justify-center gap-5 mt-3">
-          {/* Google */}
           <button
             onClick={handleGoogleLogin}
-            className="btn bg-white text-black w-full rounded-full border-[#ecaff3] hover:border-none hover:text-white  hover:bg-gradient-to-bl from-[#E43EF8] to-[#6CCDDE]"
+            className="btn bg-white text-black w-full rounded-full border-[#ecaff3] hover:text-white hover:bg-gradient-to-bl from-[#E43EF8] to-[#6CCDDE]"
           >
             <FcGoogle />
             Google
