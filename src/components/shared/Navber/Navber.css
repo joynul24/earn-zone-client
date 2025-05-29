@@ -1,0 +1,13 @@
+/* Navbar.css */
+.active {
+  color: #555;
+  text-decoration: none;
+  padding: 6px 10px;
+  transition: color 0.3s, border-bottom 0.3s;
+}
+
+.active.active {
+  color: #2563eb;
+  border-bottom: 2px solid #2563eb;
+  font-weight: bold;
+}

@@ -1,5 +1,4 @@
-// import { Link, NavLink } from "react-router-dom";
-// import "./Navber.css";
+import "./Navber.css";
 import logo from "../../../assets/logos/earn-logo.png";
 import { toast } from "react-toastify";
 import { useContext, useEffect, useState } from "react";
@@ -42,10 +41,7 @@ const Navbar = () => {
         <NavLink to="/">Home</NavLink>
       </li>
       <li>
-        <NavLink to="cotactUs">Contact Us</NavLink>
-      </li>
-      <li>
-        <NavLink to="https://www.seoclerk.com/blog">Blog</NavLink>
+        <NavLink to="contactUs">Contact Us</NavLink>
       </li>
       {user && (
         <>
@@ -95,10 +91,7 @@ const Navbar = () => {
           <Link to="/">
             <div className="flex items-center gap-2">
               <img className="w-[25px]  md:w-[40px]" src={logo} alt="" />
-              <h3 className=" md:text-xl md:font-bold font-m">
-                <span className="text-[#FFAD5A]">Earn</span>{" "}
-                <span className="text-[#FFAD5A]">Zone</span>
-              </h3>
+              <h3 className=" md:text-xl md:font-bold font-o text-[#3882F6]">Earn Zone</h3>
             </div>
           </Link>
         </div>

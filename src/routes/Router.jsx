@@ -7,29 +7,39 @@ import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 
 const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainLayout></MainLayout>,
-      errorElement: <ErrorPage></ErrorPage>,
-      children: [
-        {
-          path: "/",
-          element: <Home></Home>
+  {
+    path: "/",
+    element: <MainLayout></MainLayout>,
+    errorElement: <ErrorPage></ErrorPage>,
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+        loader: async () => {
+          return new Promise((resolve) =>
+            setTimeout(() => resolve(null), 1000)
+          );
         },
-        {
-          path: 'cotactUs',
-          element: <ContactUs></ContactUs>
-        }
-      ]
-    },
-    {
-      path: 'login',
-      element: <Login></Login>
-    },
-    {
-      path: 'register',
-      element: <Register></Register>
-    }
-  ])
+      },
+      {
+        path: "contactUs",
+        element: <ContactUs></ContactUs>,
+        loader: async () => {
+          return new Promise((resolve) =>
+            setTimeout(() => resolve(null), 1000)
+          );
+        },
+      },
+    ],
+  },
+  {
+    path: "login",
+    element: <Login></Login>,
+  },
+  {
+    path: "register",
+    element: <Register></Register>,
+  },
+]);
 
-  export default router
+export default router;
