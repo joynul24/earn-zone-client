@@ -4,7 +4,7 @@ import animationFaq from "../../../assets/lottie-files/lottie-faq.json"
 
 const Accordion = () => {
   return (
-    <div className="mt-20 md:mt-32 px-2 md:px-0">
+    <div className="mt-20 md:mt-32 px-2 md:px-3.5 lg:px-5">
       <SectionTitle
         title="Frequently Asked Questions"
         subTitle="Have questions about how EarnZone works? Find answers to the most common queries below."

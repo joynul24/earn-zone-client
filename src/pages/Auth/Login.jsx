@@ -6,6 +6,8 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { ImSpinner9 } from "react-icons/im";
+import Lottie from "lottie-react";
+import loginLottie from "../../assets/lottie-files/login-lottie.json"
 
 const Login = () => {
   const { loginUser, loginUserWithGoogle } = useContext(AuthContext);
@@ -75,9 +77,13 @@ const Login = () => {
   return (
     <div className="bg-gradient-to-bl from-[#E43EF8] to-[#6CCDDE] min-h-screen">
       <div className="card-body shadow-2xl w-[90%] md:w-[60%] lg:w-[50%] mx-auto bg-white rounded-bl-4xl rounded-br-4xl">
-        <h1 className="text-xl font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">
-          Sign In
-        </h1>
+         {/* React Lottie */}
+        <div className="flex items-center justify-center">
+          <div className="w-[200px]">
+             <Lottie animationData={loginLottie}></Lottie>
+          </div>
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold font-o text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">Sign In</h3>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
           {/* Email */}
           <div className="form-control">

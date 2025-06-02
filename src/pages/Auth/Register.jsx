@@ -8,6 +8,8 @@ import { toast } from "react-toastify";
 import Swal from "sweetalert2";
 import axios from "axios";
 import coinImg from "../../assets/logos/coin.png";
+import Lottie from "lottie-react";
+import registerLottie from "../../assets/lottie-files/register-lottie.json"
 
 const Register = () => {
   const { createUser, updateUserProfile, loginUserWithGoogle } =
@@ -98,9 +100,13 @@ const Register = () => {
   return (
     <div className="bg-gradient-to-bl from-[#E43EF8] to-[#6CCDDE] min-h-screen">
       <div className="card-body shadow-2xl w-[90%] md:w-[60%] lg:w-[50%] mx-auto bg-white rounded-bl-4xl rounded-br-4xl">
-        <h1 className="text-xl font-o font-bold text-center text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">
-          Sign Up
-        </h1>
+        {/* React Lottie */}
+        <div className="flex items-center justify-center">
+          <div className="w-[200px]">
+             <Lottie animationData={registerLottie}></Lottie>
+          </div>
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold font-o text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">Sign Up</h3>
+        </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 font-i">
           {/* Name */}
           <div className="form-control">
@@ -111,7 +117,7 @@ const Register = () => {
               {...register("name", { required: true })}
               type="text"
               placeholder="Your name"
-              className="rounded-full w-full input input-bordered"
+              className="rounded-full w-full input focus:border-[#E43EF8] input-bordered"
             />
             {errors.name && (
               <span className="text-red-400">Name field is required</span>
