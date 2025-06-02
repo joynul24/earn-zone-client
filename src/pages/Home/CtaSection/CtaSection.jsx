@@ -1,10 +1,28 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 const CtaSection = () => {
-    return (
-         <section className="bg-gradient-to-r from-purple-600 to-indigo-700 text-white text-center py-16 rounded-2xl my-12 shadow-lg px-4">
-      <h2 className="text-4xl md:text-5xl font-bold mb-4">Ready to Start Earning?</h2>
-      <p className="text-lg md:text-xl mb-8">
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/users`)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  }, []);
+
+  return (
+    <section className="bg-gradient-to-r from-purple-600 to-indigo-700 text-white text-center py-16 rounded-2xl my-12 shadow-lg px-4">
+      <h2 className="text-4xl md:text-5xl font-bold font-o mb-4">
+        Ready to Start Earning?
+      </h2>
+      <p className="text-lg font-i md:text-xl mb-8">
         Sign up now and complete tasks to earn coins. Simple, Fast & Secure.
       </p>
 
@@ -33,18 +51,24 @@ const CtaSection = () => {
           </button>
         </Link>
 
-        <a href="https://play.google.com/store/apps/details?id=yourapp" target="_blank" rel="noopener noreferrer">
+        <a
+          href="https://play.google.com/store/apps/details?id=yourapp"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <button className="bg-green-500 text-white px-6 py-3 rounded-full font-bold hover:bg-green-600 transition">
             Download App
           </button>
         </a>
       </div>
 
-      <p className="text-sm text-gray-200 mt-4">
-        EarnZone is trusted by 10,000+ users. Your success starts here.
+      <p className="text-sm text-gray-200 mt-4 font-i">
+        EarnZone is trusted by{" "}
+        <span className="font-bold text-white">{users.length || 0}+</span>{" "}
+        users. Your success starts here.
       </p>
     </section>
-    );
+  );
 };
 
 export default CtaSection;
