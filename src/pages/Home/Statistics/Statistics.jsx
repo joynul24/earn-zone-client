@@ -1,9 +1,11 @@
-// import { useEffect, useState } from "react";
-// import axios from "axios";
+import { useEffect, useState } from "react";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
-// import { toast } from "react-toastify";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 const Statistics = () => {
+  const [users, setUsers] = useState([]);
+
   //   const [stats, setStats] = useState({
   //     totalUsers: 0,
   //     totalTasks: 0,
@@ -18,6 +20,17 @@ const Statistics = () => {
   //       .catch((err) => toast.error(err.message));
   //   }, []);
 
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_API_URL}/users`)
+      .then((res) => {
+        setUsers(res.data);
+      })
+      .catch((err) => {
+        toast.error(err.message);
+      });
+  }, []);
+
   const cardStyle =
     "bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl transition";
 
@@ -30,7 +43,9 @@ const Statistics = () => {
 
       <div className="grid mt-16 md:mt-24 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
         <div className={cardStyle}>
-          <h3 className="text-4xl font-bold text-purple-700">500+</h3>
+          <h3 className="text-4xl font-bold text-purple-700">
+            {users.length || 0}+
+          </h3>
           <p className="mt-2 text-gray-700">Total Users</p>
         </div>
 

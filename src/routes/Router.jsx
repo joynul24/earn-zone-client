@@ -8,6 +8,7 @@ import MySubmissions from "../pages/worker/MySubmissions";
 import AddNewTask from "../pages/Buyer/AddNewTask";
 import TaskList from "../pages/worker/TaskList";
 import MyTask from "../pages/Buyer/MyTask";
+import PrivateRoute from "../components/shared/PrivateRoute/PrivateRoute ";
 
 const router = createBrowserRouter([
   {
@@ -27,30 +28,36 @@ const router = createBrowserRouter([
       // Worker Role Route
       {
         path: "taskList",
-        element: <TaskList></TaskList>,
-        loader: async () => {
-          return new Promise((resolve) =>
-            setTimeout(() => resolve(null), 1000)
-          );
-        },
+        element: (
+          <PrivateRoute>
+            <TaskList></TaskList>
+          </PrivateRoute>
+        ),
       },
       {
         path: "MySubmissions",
-        element: <MySubmissions></MySubmissions>,
-        loader: async () => {
-          return new Promise((resolve) =>
-            setTimeout(() => resolve(null), 1000)
-          );
-        },
+        element: (
+          <PrivateRoute>
+            <MySubmissions></MySubmissions>
+          </PrivateRoute>
+        ),
       },
       // Buyer Role Route
       {
         path: "addNewTask",
-        element: <AddNewTask></AddNewTask>
+        element: (
+          <PrivateRoute>
+            <AddNewTask></AddNewTask>
+          </PrivateRoute>
+        ),
       },
       {
         path: "myTask",
-        element: <MyTask></MyTask>
+        element: (
+          <PrivateRoute>
+            <MyTask></MyTask>
+          </PrivateRoute>
+        ),
       },
     ],
   },

@@ -11,6 +11,7 @@ import coinImg from "../../assets/logos/coin.png";
 import Lottie from "lottie-react";
 import registerLottie from "../../assets/lottie-files/register-lottie.json";
 import { FiEye, FiEyeOff } from "react-icons/fi";
+import imageUpload from "../../components/api/utils";
 
 const Register = () => {
   const { createUser, updateUserProfile, loginUserWithGoogle } =
@@ -67,15 +68,16 @@ const Register = () => {
     setLoading(true);
     try {
       const result = await createUser(data.email, data.password);
+      const imageUrl = await imageUpload(data.image[0]);
       if (result.user) {
         await updateUserProfile({
           displayName: data.name,
-          photoURL: data.photo,
+          photoURL: imageUrl,
         });
 
         await axios.post(`${import.meta.env.VITE_API_URL}/users`, {
           name: data.name,
-          image: data.photo,
+          image: imageUrl,
           email: data.email,
           role: data.selection || "worker",
           coin: data.selection === "buyer" ? 50 : 10,
@@ -131,22 +133,6 @@ const Register = () => {
           </div>
 
           {/* Photo URL */}
-          {/* <div className="form-control">
-            <label className="label">
-              <span className="label-text font-semibold">Photo URL*</span>
-            </label>
-            <input
-              {...register("photo", { required: true })}
-              type="url"
-              placeholder="Your photo URL"
-              className="rounded-full focus:border-[#E43EF8] w-full input input-bordered"
-            />
-            {errors.photo && (
-              <span className="text-red-400">Photo Url field is required</span>
-            )}
-          </div> */}
-
-          {/* --------- */}
           <div className="form-control">
             <label className="label">
               <span className="label-text font-semibold">Upload Photo*</span>
@@ -154,20 +140,19 @@ const Register = () => {
 
             <div className="relative w-full">
               <input
-                {...register("photo", { required: true })}
+                {...register("image", { required: true })}
                 type="file"
                 accept="image/*"
                 className="file-input file-input-ghost btn"
               />
             </div>
 
-            {errors.photo && (
+            {errors.image && (
               <span className="text-red-400 text-sm mt-1">
                 Photo is required
               </span>
             )}
           </div>
-
 
           {/* Email */}
           <div className="form-control">
