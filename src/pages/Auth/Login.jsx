@@ -7,12 +7,16 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { ImSpinner9 } from "react-icons/im";
 import Lottie from "lottie-react";
-import loginLottie from "../../assets/lottie-files/login-lottie.json"
+import loginLottie from "../../assets/lottie-files/login-lottie.json";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Login = () => {
   const { loginUser, loginUserWithGoogle } = useContext(AuthContext);
   const navigate = useNavigate();
-  const [loading, setLoading] = useState(false); // default: false
+  const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => setShowPassword(!showPassword);
 
   const {
     register,
@@ -63,7 +67,9 @@ const Login = () => {
         );
 
         toast.success(
-          `Dear! ${result.user?.displayName || "User"} has successfully logged in`
+          `Dear! ${
+            result.user?.displayName || "User"
+          } has successfully logged in`
         );
         navigate("/");
       }
@@ -77,12 +83,14 @@ const Login = () => {
   return (
     <div className="bg-gradient-to-bl from-[#E43EF8] to-[#6CCDDE] min-h-screen">
       <div className="card-body shadow-2xl w-[90%] md:w-[60%] lg:w-[50%] mx-auto bg-white rounded-bl-4xl rounded-br-4xl">
-         {/* React Lottie */}
+        {/* React Lottie */}
         <div className="flex items-center justify-center">
           <div className="w-[200px]">
-             <Lottie animationData={loginLottie}></Lottie>
+            <Lottie animationData={loginLottie}></Lottie>
           </div>
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold font-o text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">Sign In</h3>
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold font-o text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">
+            Sign In
+          </h3>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2">
           {/* Email */}
@@ -107,17 +115,30 @@ const Login = () => {
             <label className="label">
               <span className="label-text font-semibold">Password*</span>
             </label>
-            <input
-              {...register("password", {
-                required: true,
-                minLength: 6,
-                maxLength: 20,
-                pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
-              })}
-              type="password"
-              placeholder="Your password"
-              className="rounded-full w-full input input-bordered"
-            />
+
+            {/* Eye Icon সহ ইনপুট */}
+            <div className="relative">
+              <input
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  maxLength: 20,
+                  pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                })}
+                type={showPassword ? "text" : "password"}
+                placeholder="Your password"
+                className="rounded-full w-full input input-bordered pr-12"
+              />
+              {/* Eye Toggle Icon */}
+              <span
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-2xl text-black cursor-pointer z-10"
+                onClick={togglePassword}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </span>
+            </div>
+
+            {/* Validation Messages */}
             {errors.password?.type === "minLength" && (
               <span className="text-red-400">
                 Password must be at least 6 characters

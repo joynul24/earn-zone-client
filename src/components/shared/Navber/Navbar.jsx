@@ -1,3 +1,4 @@
+
 import "./Navber.css";
 import logo from "../../../assets/logos/earn-logo.png";
 import { toast } from "react-toastify";
@@ -10,29 +11,35 @@ import axios from "axios";
 const Navbar = () => {
   const { signOutUser, user } = useContext(AuthContext);
   const [coins, setCoins] = useState(0);
+  const [role, setRole] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchCoins = async () => {
+
+   useEffect(() => {
+    const fetchUserInfo = async () => {
       if (user?.email) {
         try {
           const res = await axios.get(
             `${import.meta.env.VITE_API_URL}/users/${user.email}`
           );
-          setCoins(res.data.coin);
+          setCoins(res.data.coin || 0);
+          setRole(res.data.role || null);
         } catch (error) {
           toast.error(error.message);
+        } finally {
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     };
-
-    fetchCoins();
+    fetchUserInfo();
   }, [user]);
+
 
   const handleSignOut = () => {
     signOutUser();
-    if (signOutUser) {
-      toast.success("User SignOut Successfuly");
-    }
+    toast.success("User Signed Out Successfully");
   };
 
   const links = (
@@ -40,14 +47,35 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <NavLink to="contactUs">Contact Us</NavLink>
-      </li>
-      {user && (
+
+      {!loading && user && (
         <>
+          {/* Role based routes */}
+          {role === "worker" && (
+            <>
+              <li>
+                <NavLink to="/taskList">Task List</NavLink>
+              </li>
+              <li>
+                <NavLink to="/MySubmissions">My Submissions</NavLink>
+              </li>
+            </>
+          )}
+          {role === "buyer" && (
+           <>
+            <li>
+              <NavLink to="/addNewTask">Add New Task</NavLink>
+            </li>
+            <li>
+              <NavLink to="/myTask">My Task</NavLink>
+            </li>
+           </>
+          )}
+
           <li>
-            <NavLink to="dashboard">Dashboard</NavLink>
+            <NavLink to="/dashboard">Dashboard</NavLink>
           </li>
+
           <li>
             <button className="">
               Available Coin
@@ -60,99 +88,99 @@ const Navbar = () => {
   );
 
   return (
-    <>
-      <div className="navbar font-i max-w-7xl mx-auto fixed top-0 left-0 right-0 z-50 bg-white">
-        <div className="navbar-start">
-          <div className="dropdown">
-            <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
+    <div className="navbar font-i max-w-7xl mx-auto fixed top-0 left-0 right-0 z-50 bg-white">
+      <div className="navbar-start">
+        <div className="dropdown">
+          <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-5 w-5"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h8m-8 6h16"
+              />
+            </svg>
+          </div>
+          <ul
+            tabIndex={0}
+            className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-black"
+          >
+            {links}
+          </ul>
+        </div>
+        <Link to="/">
+          <div className="flex items-center gap-2">
+            <img className="w-[25px] md:w-[40px]" src={logo} alt="Logo" />
+            <h3 className="md:text-xl md:font-bold font-o text-[#3882F6]">
+              Earn Zone
+            </h3>
+          </div>
+        </Link>
+      </div>
+
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal px-1 text-black">{links}</ul>
+      </div>
+
+      <div className="navbar-end gap-2">
+        <Link to="https://github.com/joynul24/earn-zone-client">
+          <button className="btn border-0 btn-sm text-[10px]">
+            Join as Developer
+          </button>
+        </Link>
+
+        {user ? (
+          <div className="dropdown dropdown-end z-50">
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar"
+            >
+              <div
+                title={user?.displayName}
+                className="w-10 rounded-full border-green-500 border-[1px]"
               >
-                {" "}
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h8m-8 6h16"
-                />{" "}
-              </svg>
+                <img
+                  referrerPolicy="no-referrer"
+                  alt="User Profile"
+                  src={user?.photoURL}
+                />
+              </div>
             </div>
             <ul
               tabIndex={0}
-              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow text-black"
+              className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              {links}
+              <li>
+                <NavLink to="#">Update Profile</NavLink>
+              </li>
+              <li>
+                <NavLink to="#">Settings</NavLink>
+              </li>
+              <li className="mt-2">
+                <button
+                  onClick={handleSignOut}
+                  className="btn btn-ghost bg-gray-200 text-gray-600"
+                >
+                  <FiLogOut />
+                  Sign Out
+                </button>
+              </li>
             </ul>
           </div>
-          <Link to="/">
-            <div className="flex items-center gap-2">
-              <img className="w-[25px]  md:w-[40px]" src={logo} alt="" />
-              <h3 className=" md:text-xl md:font-bold font-o text-[#3882F6]">Earn Zone</h3>
-            </div>
+        ) : (
+          <Link to="/login">
+            <button className="btn border-0 btn-sm text-[10px]">Login</button>
           </Link>
-        </div>
-        <div className="navbar-center hidden lg:flex">
-          <ul className=" text-black menu menu-horizontal px-1">{links}</ul>
-        </div>
-        <div className="navbar-end gap-2">
-          <Link to="https://github.com/joynul24/earn-zone-client">
-            <button className="btn border-0 btn-sm text-[10px]">
-              Join as Developer
-            </button>
-          </Link>
-
-          {user ? (
-            <div className="dropdown dropdown-end z-50">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn btn-ghost btn-circle avatar"
-              >
-                <div
-                  title={user?.displayName}
-                  className="w-10 rounded-full border-green-500 border-[1px]"
-                >
-                  <img
-                    className=""
-                    referrerPolicy="no-referrer"
-                    alt="User Profile Photo"
-                    src={user?.photoURL}
-                  />
-                </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="font-l menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-bo w-52"
-              >
-                <li>
-                  <NavLink to="#">Update Profiele</NavLink>
-                </li>
-                <li>
-                  <NavLink to="#">Settings</NavLink>
-                </li>
-                <li className="mt-2">
-                  <button
-                    onClick={handleSignOut}
-                    className="btn btn-ghost bg-gray-200 text-gray-600"
-                  >
-                    <FiLogOut />
-                    Sign Out
-                  </button>
-                </li>
-              </ul>
-            </div>
-          ) : (
-            <Link to="/login">
-              <button className="btn border-0 btn-sm text-[10px]">Login</button>
-            </Link>
-          )}
-        </div>
+        )}
       </div>
-    </>
+    </div>
   );
 };
 

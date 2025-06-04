@@ -9,13 +9,17 @@ import Swal from "sweetalert2";
 import axios from "axios";
 import coinImg from "../../assets/logos/coin.png";
 import Lottie from "lottie-react";
-import registerLottie from "../../assets/lottie-files/register-lottie.json"
+import registerLottie from "../../assets/lottie-files/register-lottie.json";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Register = () => {
   const { createUser, updateUserProfile, loginUserWithGoogle } =
     useContext(AuthContext);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+
+  const [showPassword, setShowPassword] = useState(false);
+  const togglePassword = () => setShowPassword(!showPassword);
 
   const {
     register,
@@ -103,9 +107,11 @@ const Register = () => {
         {/* React Lottie */}
         <div className="flex items-center justify-center">
           <div className="w-[200px]">
-             <Lottie animationData={registerLottie}></Lottie>
+            <Lottie animationData={registerLottie}></Lottie>
           </div>
-          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold font-o text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">Sign Up</h3>
+          <h3 className="text-xl md:text-2xl lg:text-3xl font-bold font-o text-transparent bg-clip-text bg-gradient-to-r from-[#27d3f1] to-[#d310e9]">
+            Sign Up
+          </h3>
         </div>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-2 font-i">
           {/* Name */}
@@ -125,7 +131,7 @@ const Register = () => {
           </div>
 
           {/* Photo URL */}
-          <div className="form-control">
+          {/* <div className="form-control">
             <label className="label">
               <span className="label-text font-semibold">Photo URL*</span>
             </label>
@@ -138,7 +144,30 @@ const Register = () => {
             {errors.photo && (
               <span className="text-red-400">Photo Url field is required</span>
             )}
+          </div> */}
+
+          {/* --------- */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text font-semibold">Upload Photo*</span>
+            </label>
+
+            <div className="relative w-full">
+              <input
+                {...register("photo", { required: true })}
+                type="file"
+                accept="image/*"
+                className="file-input file-input-ghost btn"
+              />
+            </div>
+
+            {errors.photo && (
+              <span className="text-red-400 text-sm mt-1">
+                Photo is required
+              </span>
+            )}
           </div>
+
 
           {/* Email */}
           <div className="form-control">
@@ -157,33 +186,47 @@ const Register = () => {
           </div>
 
           {/* Password */}
-          <div className="form-control">
+          <div className="form-control relative">
             <label className="label">
               <span className="label-text font-semibold">Password*</span>
             </label>
-            <input
-              {...register("password", {
-                required: true,
-                minLength: 6,
-                maxLength: 20,
-                pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
-              })}
-              type="password"
-              placeholder="Your password"
-              className="rounded-full focus:border-[#E43EF8] w-full input input-bordered"
-            />
+
+            {/* input with icon inside */}
+            <div className="relative">
+              <input
+                {...register("password", {
+                  required: true,
+                  minLength: 6,
+                  maxLength: 20,
+                  pattern: /(?=.*[A-Z])(?=.*[!@#$&*])(?=.*[0-9])(?=.*[a-z])/,
+                })}
+                type={showPassword ? "text" : "password"}
+                placeholder="Your password"
+                className="rounded-full focus:border-[#E43EF8] w-full input input-bordered pr-12"
+              />
+
+              {/* Eye Icon */}
+              <span
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-2xl text-black cursor-pointer z-10"
+                onClick={togglePassword}
+              >
+                {showPassword ? <FiEyeOff /> : <FiEye />}
+              </span>
+            </div>
+
+            {/* Error messages */}
             {errors.password?.type === "minLength" && (
-              <span className="text-red-400">
+              <span className="text-red-400 text-sm">
                 Password must be at least 6 characters
               </span>
             )}
             {errors.password?.type === "maxLength" && (
-              <span className="text-red-400">
+              <span className="text-red-400 text-sm">
                 Password must be less than 20 characters
               </span>
             )}
             {errors.password?.type === "pattern" && (
-              <span className="text-red-400">
+              <span className="text-red-400 text-sm">
                 Password must have one uppercase, one lowercase, one number and
                 one special character.
               </span>
