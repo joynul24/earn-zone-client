@@ -1,35 +1,21 @@
-import { useEffect, useState } from "react";
-import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
 import { toast } from "react-toastify";
-import axios from "axios";
+import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
+import useUsers from "../../../components/shared/hooks/useUsers";
 
 const Statistics = () => {
-  const [users, setUsers] = useState([]);
+  const { users, loading, error } = useUsers();
 
-  //   const [stats, setStats] = useState({
-  //     totalUsers: 0,
-  //     totalTasks: 0,
-  //     totalPayments: 0,
-  //     activeTasks: 0,
-  //   });
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-bars loading-xl"></span>
+      </div>
+    );
+  }
 
-  //   useEffect(() => {
-  //     axios
-  //       .get(`${import.meta.env.VITE_API_URL}/stats`)
-  //       .then((res) => setStats(res.data))
-  //       .catch((err) => toast.error(err.message));
-  //   }, []);
-
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/users`)
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  }, []);
+  if(error) {
+    return toast.error(error.message)
+  }
 
   const cardStyle =
     "bg-white rounded-xl shadow-md p-6 text-center hover:shadow-xl transition";

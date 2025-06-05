@@ -1,21 +1,9 @@
-import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
+import useUsers from "../../../components/shared/hooks/useUsers";
 
 const CtaSection = () => {
-  const [users, setUsers] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_API_URL}/users`)
-      .then((res) => {
-        setUsers(res.data);
-      })
-      .catch((err) => {
-        toast.error(err.message);
-      });
-  }, []);
+ const {users} = useUsers()
+  
 
   return (
     <section className="bg-gradient-to-r from-purple-600 to-indigo-700 text-white text-center py-16 rounded-2xl my-12 shadow-lg px-4">
