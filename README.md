@@ -5,7 +5,6 @@ EarnZone is a full-stack MERN-based web application that allows users to earn co
 ## 🚀 Live Link
 
 [👉 Visit EarnZone Live](https://earn-zone-client.firebaseapp.com/)
- (https://earn-zone-client.web.app/)
 ---
 
 ## 📌 Features
@@ -66,5 +65,5 @@ EarnZone is a full-stack MERN-based web application that allows users to earn co
 
 ### 1. Clone the Repo
 ```npm 
-git clone https://github.com/joynul24/earn-zone-client
+git clone https://github.com/joynul24/earn-zone-client.git
 cd earnzone
