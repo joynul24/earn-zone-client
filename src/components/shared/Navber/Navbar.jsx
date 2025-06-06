@@ -1,4 +1,3 @@
-
 import "./Navber.css";
 import logo from "../../../assets/logos/earn-logo.png";
 import { toast } from "react-toastify";
@@ -11,11 +10,8 @@ import axios from "axios";
 const Navbar = () => {
   const { signOutUser, user } = useContext(AuthContext);
   const [coins, setCoins] = useState(0);
-  const [role, setRole] = useState(null);
-    const [loading, setLoading] = useState(true);
 
-
-   useEffect(() => {
+  useEffect(() => {
     const fetchUserInfo = async () => {
       if (user?.email) {
         try {
@@ -23,19 +19,14 @@ const Navbar = () => {
             `${import.meta.env.VITE_API_URL}/users/${user.email}`
           );
           setCoins(res.data.coin || 0);
-          setRole(res.data.role || null);
         } catch (error) {
           toast.error(error.message);
-        } finally {
-          setLoading(false);
         }
-      } else {
-        setLoading(false);
       }
     };
+
     fetchUserInfo();
   }, [user]);
-
 
   const handleSignOut = () => {
     signOutUser();
@@ -47,42 +38,16 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-
-      {!loading && user && (
-        <>
-          {/* Role based routes */}
-          {role === "worker" && (
-            <>
-              <li>
-                <NavLink to="/taskList">Task List</NavLink>
-              </li>
-              <li>
-                <NavLink to="/MySubmissions">My Submissions</NavLink>
-              </li>
-            </>
-          )}
-          {role === "buyer" && (
-           <>
-            <li>
-              <NavLink to="/addNewTask">Add New Task</NavLink>
-            </li>
-            <li>
-              <NavLink to="/myTask">My Task</NavLink>
-            </li>
-           </>
-          )}
-
-          <li>
-            <NavLink to="/dashboard">Dashboard</NavLink>
-          </li>
-
-          <li>
-            <button className="">
-              Available Coin
-              <div className="badge badge-xs badge-secondary">{coins || 0}</div>
-            </button>
-          </li>
-        </>
+      <li>
+        <button className="">
+          Available Coin
+          <div className="badge badge-xs badge-secondary">{coins || 0}</div>
+        </button>
+      </li>
+      {user && (
+        <li>
+          <NavLink to="dashboard">Dashboard</NavLink>
+        </li>
       )}
     </>
   );

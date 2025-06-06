@@ -9,6 +9,7 @@ import AddNewTask from "../pages/Buyer/AddNewTask";
 import TaskList from "../pages/worker/TaskList";
 import MyTask from "../pages/Buyer/MyTask";
 import PrivateRoute from "../components/shared/PrivateRoute/PrivateRoute ";
+import Dashboard from "../MainLayout/Dashboard";
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,39 @@ const router = createBrowserRouter([
       },
     ],
   },
+
+   // Dashboard Routes
+  {
+    path: "/dashboard",
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
+    errorElement: <ErrorPage />,
+    children: [
+      // Worker Dashboard Routes
+      {
+        path: 'taskList',
+        element: <PrivateRoute><TaskList></TaskList></PrivateRoute>
+      },
+      {
+        path: 'MySubmissions',
+        element: <PrivateRoute><MySubmissions></MySubmissions></PrivateRoute>
+      },
+      // Buyer Dashboard Routes
+      {
+        path: 'addNewTask',
+        element: <PrivateRoute><AddNewTask></AddNewTask></PrivateRoute>
+      },
+      {
+        path: 'myTask',
+        element: <PrivateRoute><MyTask></MyTask></PrivateRoute>
+      },
+      // Admin Dashboard Routes
+    ],
+  },
+
   {
     path: "login",
     element: <Login></Login>,
