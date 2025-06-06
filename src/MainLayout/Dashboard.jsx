@@ -4,19 +4,19 @@ import { FaBell } from "react-icons/fa";
 import { useContext } from "react";
 import AuthContext from "../context/Authcontext";
 import { getNavLinkClass } from "../components/Utilitis/getNavLinkClass .js";
-import UseUserRole from "../components/shared/hooks/UseUserRole.jsx";
+// import UseUserRole from "../components/shared/hooks/UseUserRole.jsx";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  const { userRole, loading } = UseUserRole();
+  // const { userRole, loading } = UseUserRole();
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <span className="loading loading-bars loading-xl"></span>
-      </div>
-    );
-  }
+  // if (loading) {
+  //   return (
+  //     <div className="flex justify-center items-center min-h-screen">
+  //       <span className="loading loading-bars loading-xl"></span>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">

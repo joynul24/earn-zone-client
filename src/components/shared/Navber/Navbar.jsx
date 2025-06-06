@@ -10,23 +10,27 @@ import axios from "axios";
 const Navbar = () => {
   const { signOutUser, user } = useContext(AuthContext);
   const [coins, setCoins] = useState(0);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
+    const fetchUserCoin = async () => {
       if (user?.email) {
         try {
+          setLoading(true);
           const res = await axios.get(
             `${import.meta.env.VITE_API_URL}/users/${user.email}`
           );
-          setCoins(res.data.coin || 0);
+          setCoins(res.data.coin);
         } catch (error) {
           toast.error(error.message);
+        } finally {
+          setLoading(false);
         }
       }
     };
 
-    fetchUserInfo();
-  }, [user]);
+    fetchUserCoin();
+  }, [user?.email]);
 
   const handleSignOut = () => {
     signOutUser();
@@ -38,16 +42,20 @@ const Navbar = () => {
       <li>
         <NavLink to="/">Home</NavLink>
       </li>
-      <li>
-        <button className="">
-          Available Coin
-          <div className="badge badge-xs badge-secondary">{coins || 0}</div>
-        </button>
-      </li>
       {user && (
-        <li>
-          <NavLink to="dashboard">Dashboard</NavLink>
-        </li>
+        <>
+          <li>
+            <div className="flex items-center gap-2 text-sm font-medium text-black">
+              Available Coin
+              <span className="badge badge-secondary">
+                {loading ? "..." : coins || 0}
+              </span>
+            </div>
+          </li>
+          <li>
+            <NavLink to="dashboard">Dashboard</NavLink>
+          </li>
+        </>
       )}
     </>
   );
