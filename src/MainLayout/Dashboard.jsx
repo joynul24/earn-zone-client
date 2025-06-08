@@ -5,10 +5,12 @@ import { useContext } from "react";
 import AuthContext from "../context/Authcontext";
 import { getNavLinkClass } from "../components/Utilitis/getNavLinkClass .js";
 import useUserRole from "../components/shared/hooks/UseUserRole.jsx";
+import useUserCoin from "../components/shared/hooks/useUserCoin.jsx";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const { userRole, loadingRole } = useUserRole();
+  const {userCoin} = useUserCoin();
 
   if (loadingRole) {
     return (
@@ -102,7 +104,7 @@ const Dashboard = () => {
           <header className="bg-white shadow-md px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
             <div className="flex items-center gap-2">
               <span className="text-sm md:text-base font-semibold text-gray-600 font-o">
-                Available Coins: <span className="text-blue-600">0</span>
+                Available Coins: <span className="text-blue-600">{userCoin}</span>
               </span>
             </div>
 
