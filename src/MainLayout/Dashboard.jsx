@@ -1,16 +1,24 @@
 import { NavLink, Outlet } from "react-router-dom";
 import dashboardLogo from "../assets/logos/earn-logo.png";
-import { FaBell } from "react-icons/fa";
+import { FaBell, FaHome } from "react-icons/fa";
 import { useContext } from "react";
 import AuthContext from "../context/Authcontext";
 import { getNavLinkClass } from "../components/Utilitis/getNavLinkClass .js";
 import useUserRole from "../components/shared/hooks/UseUserRole.jsx";
 import useUserCoin from "../components/shared/hooks/useUserCoin.jsx";
+import { GoTasklist } from "react-icons/go";
+import { MdTask } from "react-icons/md";
+import { GiReceiveMoney } from "react-icons/gi";
+import { MdAddTask } from "react-icons/md";
+import { FaTasks } from "react-icons/fa";
+import { TbCoinFilled } from "react-icons/tb";
+import { FaUsersGear } from "react-icons/fa6";
+import { MdManageSearch } from "react-icons/md";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const { userRole, loadingRole } = useUserRole();
-  const {userCoin} = useUserCoin();
+  const { userCoin } = useUserCoin();
 
   if (loadingRole) {
     return (
@@ -35,6 +43,7 @@ const Dashboard = () => {
             <ul className="space-y-2">
               <li>
                 <NavLink to="/" className={getNavLinkClass}>
+                  <FaHome />
                   Home
                 </NavLink>
               </li>
@@ -44,16 +53,19 @@ const Dashboard = () => {
                 <>
                   <li>
                     <NavLink to="taskList" className={getNavLinkClass}>
+                      <GoTasklist />
                       Task List
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="MySubmissions" className={getNavLinkClass}>
+                      <MdTask />
                       My Submission
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="withdrawals" className={getNavLinkClass}>
+                      <GiReceiveMoney />
                       Withdrawals
                     </NavLink>
                   </li>
@@ -64,16 +76,19 @@ const Dashboard = () => {
                 <>
                   <li>
                     <NavLink to="addNewTask" className={getNavLinkClass}>
+                      <MdAddTask />
                       Add New Task
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="myTask" className={getNavLinkClass}>
+                      <FaTasks />
                       My Task
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="purchaseCoin" className={getNavLinkClass}>
+                      <TbCoinFilled />
                       Purchase Coin
                     </NavLink>
                   </li>
@@ -84,11 +99,13 @@ const Dashboard = () => {
                 <>
                   <li>
                     <NavLink to="manageUsers" className={getNavLinkClass}>
+                      <FaUsersGear />
                       Manage Users
                     </NavLink>
                   </li>
                   <li>
                     <NavLink to="manageTask" className={getNavLinkClass}>
+                      <MdManageSearch />
                       Manage Task
                     </NavLink>
                   </li>
@@ -104,7 +121,8 @@ const Dashboard = () => {
           <header className="bg-white shadow-md px-4 py-3 flex flex-col md:flex-row md:items-center md:justify-between gap-2">
             <div className="flex items-center gap-2">
               <span className="text-sm md:text-base font-semibold text-gray-600 font-o">
-                Available Coins: <span className="text-blue-600">{userCoin}</span>
+                Available Coins:{" "}
+                <span className="text-orange-400">{userCoin}</span>
               </span>
             </div>
 
