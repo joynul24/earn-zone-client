@@ -10,6 +10,10 @@ import TaskList from "../pages/worker/TaskList";
 import MyTask from "../pages/Buyer/MyTask";
 import PrivateRoute from "../components/shared/PrivateRoute/PrivateRoute ";
 import Dashboard from "../MainLayout/Dashboard";
+import Withdrawals from "../pages/worker/Withdrawals";
+import PurchaseCoin from "../pages/Buyer/PurchaseCoin";
+import ManageUsers from "../pages/Admin/ManageUsers";
+import ManageTask from "../pages/Admin/ManageTask";
 
 const router = createBrowserRouter([
   {
@@ -82,6 +86,10 @@ const router = createBrowserRouter([
         path: 'MySubmissions',
         element: <PrivateRoute><MySubmissions></MySubmissions></PrivateRoute>
       },
+      {
+        path: 'withdrawals',
+        element: <PrivateRoute><Withdrawals></Withdrawals></PrivateRoute>
+      },
       // Buyer Dashboard Routes
       {
         path: 'addNewTask',
@@ -91,7 +99,19 @@ const router = createBrowserRouter([
         path: 'myTask',
         element: <PrivateRoute><MyTask></MyTask></PrivateRoute>
       },
+      {
+        path: 'purchaseCoin',
+        element: <PrivateRoute><PurchaseCoin></PurchaseCoin></PrivateRoute>
+      },
       // Admin Dashboard Routes
+      {
+        path: 'manageUsers',
+        element: <PrivateRoute><ManageUsers></ManageUsers></PrivateRoute>
+      },
+      {
+        path: 'manageTask',
+        element: <PrivateRoute><ManageTask></ManageTask></PrivateRoute>
+      }
     ],
   },
 

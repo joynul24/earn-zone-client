@@ -4,19 +4,19 @@ import { FaBell } from "react-icons/fa";
 import { useContext } from "react";
 import AuthContext from "../context/Authcontext";
 import { getNavLinkClass } from "../components/Utilitis/getNavLinkClass .js";
-// import UseUserRole from "../components/shared/hooks/UseUserRole.jsx";
+import useUserRole from "../components/shared/hooks/UseUserRole.jsx";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  // const { userRole, loading } = UseUserRole();
+  const { userRole, loadingRole } = useUserRole();
 
-  // if (loading) {
-  //   return (
-  //     <div className="flex justify-center items-center min-h-screen">
-  //       <span className="loading loading-bars loading-xl"></span>
-  //     </div>
-  //   );
-  // }
+  if (loadingRole) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <span className="loading loading-bars loading-xl"></span>
+      </div>
+    );
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100">
@@ -36,35 +36,61 @@ const Dashboard = () => {
                   Home
                 </NavLink>
               </li>
+
               {/* Show only if role is "worker" */}
               {userRole === "worker" && (
-              <>
-                <li>
-                  <NavLink to="taskList" className={getNavLinkClass}>
-                    Task List
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="MySubmissions" className={getNavLinkClass}>
-                    My Submission
-                  </NavLink>
-                </li>
-              </>
+                <>
+                  <li>
+                    <NavLink to="taskList" className={getNavLinkClass}>
+                      Task List
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="MySubmissions" className={getNavLinkClass}>
+                      My Submission
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="withdrawals" className={getNavLinkClass}>
+                      Withdrawals
+                    </NavLink>
+                  </li>
+                </>
               )}
               {/* Show only if role is "buyer" */}
               {userRole === "buyer" && (
-               <>
-                <li>
-                  <NavLink to="addNewTask" className={getNavLinkClass}>
-                    Add New Task
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="myTask" className={getNavLinkClass}>
-                    My Task
-                  </NavLink>
-                </li>
-               </>
+                <>
+                  <li>
+                    <NavLink to="addNewTask" className={getNavLinkClass}>
+                      Add New Task
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="myTask" className={getNavLinkClass}>
+                      My Task
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="purchaseCoin" className={getNavLinkClass}>
+                      Purchase Coin
+                    </NavLink>
+                  </li>
+                </>
+              )}
+              {/* Show only if role is "Admin" */}
+              {userRole === "admin" && (
+                <>
+                  <li>
+                    <NavLink to="manageUsers" className={getNavLinkClass}>
+                      Manage Users
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="manageTask" className={getNavLinkClass}>
+                      Manage Task
+                    </NavLink>
+                  </li>
+                </>
               )}
             </ul>
           </nav>
@@ -87,7 +113,8 @@ const Dashboard = () => {
 
               <div className="hidden md:flex flex-col text-right">
                 <span className="text-sm font-bold text-gray-700 font-i">
-                  Role: <span className="text-green-700">{userRole || "User"}</span>
+                  Role:{" "}
+                  <span className="text-green-700">{userRole || "User"}</span>
                 </span>
                 <span className="text-sm font-bold text-gray-700 font-o">
                   {user?.displayName || "Guest"}
