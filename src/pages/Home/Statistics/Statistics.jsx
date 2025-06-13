@@ -13,8 +13,8 @@ const Statistics = () => {
     );
   }
 
-  if(error) {
-    return toast.error(error.message)
+  if (error) {
+    return toast.error(error.message);
   }
 
   const cardStyle =
@@ -24,7 +24,7 @@ const Statistics = () => {
     <section className="bg-gray-100 py-16 px-4 text-center mt-20 md:mt-28 rounded-xl my-12">
       <SectionTitle
         title="Platform Statistics"
-        subTitle=" Get a glimpse of our platform’s success and growth in real numbers."
+        subTitle="Get a glimpse of our platform’s success and growth in real numbers."
       ></SectionTitle>
 
       <div className="grid mt-16 md:mt-24 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">

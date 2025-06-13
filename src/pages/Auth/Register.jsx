@@ -132,7 +132,7 @@ const Register = () => {
             )}
           </div>
 
-          {/* Photo URL */}
+          {/* Uplad Photo */}
           <div className="form-control">
             <label className="label">
               <span className="label-text font-semibold">Upload Photo*</span>

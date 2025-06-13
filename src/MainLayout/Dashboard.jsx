@@ -75,19 +75,25 @@ const Dashboard = () => {
               {userRole === "buyer" && (
                 <>
                   <li>
-                    <NavLink to="addNewTask" className={getNavLinkClass}>
+                    <NavLink
+                      to="/dashboard/addNewTask"
+                      className={getNavLinkClass}
+                    >
                       <MdAddTask />
                       Add New Task
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="myTask" className={getNavLinkClass}>
+                    <NavLink to="/dashboard/myTask" className={getNavLinkClass}>
                       <FaTasks />
                       My Task
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="purchaseCoin" className={getNavLinkClass}>
+                    <NavLink
+                      to="/dashboard/purchaseCoin"
+                      className={getNavLinkClass}
+                    >
                       <TbCoinFilled />
                       Purchase Coin
                     </NavLink>
@@ -98,13 +104,19 @@ const Dashboard = () => {
               {userRole === "admin" && (
                 <>
                   <li>
-                    <NavLink to="manageUsers" className={getNavLinkClass}>
+                    <NavLink
+                      to="/dashboard/manageUsers"
+                      className={getNavLinkClass}
+                    >
                       <FaUsersGear />
                       Manage Users
                     </NavLink>
                   </li>
                   <li>
-                    <NavLink to="manageTask" className={getNavLinkClass}>
+                    <NavLink
+                      to="/dashboard/manageTask"
+                      className={getNavLinkClass}
+                    >
                       <MdManageSearch />
                       Manage Task
                     </NavLink>
