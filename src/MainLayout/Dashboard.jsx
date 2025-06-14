@@ -18,9 +18,9 @@ import { MdManageSearch } from "react-icons/md";
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const { userRole, loadingRole } = useUserRole();
-  const { userCoin } = useUserCoin();
+  const { userCoin, loadingCoin } = useUserCoin();
 
-  if (loadingRole) {
+  if (loadingRole || loadingCoin) {
     return (
       <div className="flex justify-center items-center min-h-screen">
         <span className="loading loading-bars loading-xl"></span>

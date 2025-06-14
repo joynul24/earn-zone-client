@@ -63,6 +63,7 @@ const AuthProvider = (props) => {
     user,
     updateUserProfile,
     loading,
+    setUser
   };
 
   return (
