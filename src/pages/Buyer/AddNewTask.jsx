@@ -45,7 +45,7 @@ const AddNewTask = () => {
         completion_date,
         submission_info,
         task_image_url: imageUrl,
-        buyer_email: user.email,
+        email: user.email.toLowerCase(),
         status: "pending",
         assigned: 0,
         created_at: new Date(),

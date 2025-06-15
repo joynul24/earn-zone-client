@@ -59,9 +59,9 @@ const PurchaseCoin = () => {
 
   return (
     <div className="max-w-6xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-4 text-center">Purchase Coins</h1>
+      <h1 className="text-3xl font-o font-bold mb-4 text-center">Purchase Coins</h1>
       <div className="mb-6 text-center text-xl">
-        <span className="font-semibold">Your Current Coins: </span>
+        <span className="font-semibold font-i">Your Current Coins: </span>
         <span className="text-blue-600">{currentCoins}</span>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-6">
@@ -72,7 +72,7 @@ const PurchaseCoin = () => {
             className={`${color} text-white rounded-xl shadow-lg p-8 flex flex-col items-center cursor-pointer hover:scale-105 transform transition duration-300`}
           >
             <h2 className="text-5xl font-extrabold mb-2">{coins}</h2>
-            <p className="text-lg mb-1">Coins</p>
+            <p className="text-lg mb-1 font-bold">Coins</p>
             <p className="text-3xl font-semibold mb-2">=</p>
             <p className="text-4xl font-semibold">${price}</p>
             {loadingId === id && (
