@@ -1,9 +1,16 @@
-import { toast } from "react-toastify";
+import { useEffect } from "react";
 import SectionTitle from "../../../components/shared/SectionTitle/SectionTitle";
 import useUsers from "../../../components/shared/hooks/useUsers";
+import { toast } from "react-toastify";
 
 const Statistics = () => {
   const { users, loading, error } = useUsers();
+
+  useEffect(() => {
+    if (error) {
+      toast.error(`Failed to load users: ${error.message}`);
+    }
+  }, [error]);
 
   if (loading) {
     return (
@@ -11,10 +18,6 @@ const Statistics = () => {
         <span className="loading loading-bars loading-xl"></span>
       </div>
     );
-  }
-
-  if (error) {
-    return toast.error(error.message);
   }
 
   const cardStyle =

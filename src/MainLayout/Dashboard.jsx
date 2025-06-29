@@ -19,7 +19,6 @@ const Dashboard = () => {
   const { user } = useContext(AuthContext);
   const { userRole, loadingRole } = useUserRole();
   const { userCoin, loadingCoin } = useUserCoin();
-
   if (loadingRole || loadingCoin) {
     return (
       <div className="flex justify-center items-center min-h-screen">

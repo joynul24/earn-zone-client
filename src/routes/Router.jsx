@@ -14,9 +14,9 @@ import Withdrawals from "../pages/worker/Withdrawals";
 import PurchaseCoin from "../pages/Buyer/PurchaseCoin";
 import ManageUsers from "../pages/Admin/ManageUsers";
 import ManageTask from "../pages/Admin/ManageTask";
+import TaskDetails from "../components/TaskDetails/TaskDetails";
 
 const router = createBrowserRouter([
-  
   {
     path: "/",
     element: <MainLayout></MainLayout>,
@@ -86,6 +86,10 @@ const router = createBrowserRouter([
             <TaskList></TaskList>
           </PrivateRoute>
         ),
+      },
+      {
+        path: "taskDetails/:id",
+        element: <PrivateRoute><TaskDetails></TaskDetails></PrivateRoute>,
       },
       {
         path: "MySubmissions",

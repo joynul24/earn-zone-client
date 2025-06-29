@@ -19,7 +19,7 @@ const Testimonial = () => {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    fetch(`${import.meta.env. VITE_API_URL}/reviews`)
+    fetch(`${import.meta.env.VITE_API_URL}/reviews`)
       .then((res) => res.json())
       .then((data) => setReviews(data));
   }, []);

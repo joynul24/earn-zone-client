@@ -22,7 +22,7 @@ const useUserRole = () => {
         );
         setRole(response.data.role);
       } catch (error) {
-        toast.error("Error fetching user role:", error);
+        toast.error(`Error fetching user role: ${error.message}`);
         setRole(null);
       } finally {
         setLoadingRole(false);

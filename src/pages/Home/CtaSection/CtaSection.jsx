@@ -21,7 +21,7 @@ const CtaSection = () => {
           </button>
         </Link>
 
-        <Link to="/">
+        <Link to="dashboard/taskList">
           <button className="bg-indigo-100 text-indigo-800 px-6 py-3 rounded-full font-medium hover:bg-white transition">
             Start Task
           </button>
