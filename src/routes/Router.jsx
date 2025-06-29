@@ -15,6 +15,7 @@ import PurchaseCoin from "../pages/Buyer/PurchaseCoin";
 import ManageUsers from "../pages/Admin/ManageUsers";
 import ManageTask from "../pages/Admin/ManageTask";
 import TaskDetails from "../components/TaskDetails/TaskDetails";
+import PaymentHistory from "../components/PaymentHistory/PaymentHistory";
 
 const router = createBrowserRouter([
   {
@@ -106,6 +107,10 @@ const router = createBrowserRouter([
             <Withdrawals></Withdrawals>
           </PrivateRoute>
         ),
+      },
+      {
+        path: 'paymentHistory',
+        element: <PrivateRoute><PaymentHistory></PaymentHistory></PrivateRoute>
       },
       // Buyer Dashboard Routes
       {

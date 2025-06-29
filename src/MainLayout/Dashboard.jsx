@@ -14,6 +14,7 @@ import { FaTasks } from "react-icons/fa";
 import { TbCoinFilled } from "react-icons/tb";
 import { FaUsersGear } from "react-icons/fa6";
 import { MdManageSearch } from "react-icons/md";
+import { FaHistory } from "react-icons/fa";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -66,6 +67,12 @@ const Dashboard = () => {
                     <NavLink to="withdrawals" className={getNavLinkClass}>
                       <GiReceiveMoney />
                       Withdrawals
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="paymentHistory" className={getNavLinkClass}>
+                      <FaHistory />
+                      Payment History
                     </NavLink>
                   </li>
                 </>
