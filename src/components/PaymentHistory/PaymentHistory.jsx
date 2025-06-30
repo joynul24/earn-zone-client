@@ -25,7 +25,7 @@ const PaymentHistory = () => {
   }, [user]);
 
   return (
-    <div className="mt-10 px-4 md:px-10 lg:px-20">
+    <div className="mt-10 px-4 md:px-5 lg:px-10">
       <h1 className="text-2xl text-center font-semibold text-gray-700 mb-6">💰 Payment History</h1>
 
       {loading ? (

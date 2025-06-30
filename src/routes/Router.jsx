@@ -16,6 +16,7 @@ import ManageUsers from "../pages/Admin/ManageUsers";
 import ManageTask from "../pages/Admin/ManageTask";
 import TaskDetails from "../components/TaskDetails/TaskDetails";
 import PaymentHistory from "../components/PaymentHistory/PaymentHistory";
+import MyProfile from "../components/MyProfile/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,11 @@ const router = createBrowserRouter([
             setTimeout(() => resolve(null), 1000)
           );
         },
+      },
+      // My Profile route
+      {
+        path: '/my-profile',
+        element: <MyProfile></MyProfile>
       },
       // Worker Role Route
       {
