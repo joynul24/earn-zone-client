@@ -42,8 +42,8 @@ const MyProfile = () => {
   return (
     <div>
       {isModalOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
-          <div className="bg-white rounded-lg shadow-lg w-full max-w-xl relative overflow-hidden">
+        <div className="fixed inset-0 bg-purple-400 bg-opacity-50 flex justify-center items-center z-40">
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-xl relative overflow-hidden">
             {/* Cover Section */}
             <div className="relative h-40 bg-gradient-to-r from-blue-500 to-indigo-600">
               <img

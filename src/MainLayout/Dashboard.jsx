@@ -15,6 +15,7 @@ import { TbCoinFilled } from "react-icons/tb";
 import { FaUsersGear } from "react-icons/fa6";
 import { MdManageSearch } from "react-icons/md";
 import { FaHistory } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
@@ -73,6 +74,12 @@ const Dashboard = () => {
                     <NavLink to="paymentHistory" className={getNavLinkClass}>
                       <FaHistory />
                       Payment History
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink to="/my-profile" className={getNavLinkClass}>
+                      <CgProfile />
+                      My Profile
                     </NavLink>
                   </li>
                 </>
